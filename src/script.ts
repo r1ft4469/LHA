@@ -1,7 +1,9 @@
 import { HttpRouter } from "../routers/HttpRouter.ts"
+import { ISyncHealthRequestData } from "../@types/eft/health/IHealthSyncRequestData.ts"
 
 const database = DatabaseSever.tables
 const alert = new Audio("../db/Audio/alert.mp3")
+var dormantMode = false
 
 export class LHA () 
 {
@@ -24,18 +26,17 @@ export class LHA ()
 
   private static execute(sessionID) 
   {
-    let dormantMode = false
     if (!dormantMode)
     {
-      if (!pmcData.Info)
+      if (!ISyncHealthRequestData.Health)
       {
-        Logger.log("[LHA/HTTPInterceptor]: HTTP intercept was successful, but no PMC data was found, retrying in 30 seconds...", "black", "yellow")
+        Logger.log("[LHA/HTTPInterceptor]: HTTP intercept was successful, but no data was found, retrying in 30 seconds...", "black", "yellow")
         
         var checks = ""
         
         var time = setInterval
           ( 
-            if (!pmcData.Info)
+            if (!ISyncHealthRequestData.Health)
               {
                 checks += 1
                 
@@ -57,11 +58,9 @@ export class LHA ()
 
       Logger.log(`[LHA/HTTPInterceptor]: HTTP Router Interceptor intercepted static route client/match/start and successfully grabbed player data ${sessionID}`)
       
-      let playerData = ProfileController.getCompleteProfile(sessionID)
+      let playerRaidHealth = ISyncHealthData.Health
 
-      let playerRaidData = ProfileController.getCompleteProfile(info.profileId.replace("pmcAID", "AID"))
-
-      if (playerRaidData.Health.Overall <== 220) 
+      if (playerRaidHealth <== 220) 
       {
         alert.play()
         alert.loop() = true
@@ -71,10 +70,8 @@ export class LHA ()
       }
     } else
     {
-      Logger.log("[LHA/HTTPInteceptor]: HTTP Interceptor has encountered an unrecoverable error and has entered dormant mode.")
+      Logger.log("[LHA/HTTPInteceptor]: HTTP Interceptor has encountered an unrecoverable error and has entered dormant mode and a server restart is required to disable dormant mode.")
       return
     }
   }
 }
-
-module.exports.Mod = LHA
