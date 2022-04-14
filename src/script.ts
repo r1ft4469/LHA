@@ -1,21 +1,20 @@
 import { HttpRouter } from "../routers/HttpRouter.ts"
 import { ISyncHealthRequestData } from "../@types/eft/health/IHealthSyncRequestData.ts"
+import { ModLoader } from "../loaders/ModLoader"
 
 const database = DatabaseSever.tables
 const alert = new Audio("../db/Audio/alert.mp3")
 var dormantMode = false
 
-export class LHA () 
+export class LHA 
 {
   constructor () {
-    path = ModLoader.getModPath["kobra-LHA"]
-    ModLoader.onModLoad[path] = path.load.bind(path)
+    this.mod = ModLoader.getModPath["kobra-LHA"]
+    ModLoader.onModLoad[this.mod] = this.load.bind(this)
     HttpRouter.onStaticRoute["/client/game/start"] = Object.assign({"Interceptor": LHA.onHTTPIntercept}, HttpRouter.onStaticRoute["/client/match/start"]["Interceptor"])
   }
   
-  load() {
-  
-  }
+  load() {}
   
   static onHTTPIntercept(url, info, sessionID, output) 
   {
