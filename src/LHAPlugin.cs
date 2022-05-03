@@ -8,8 +8,7 @@ namespace LowHealthAlert
     {
         private void Awake()
         {
-            new LHAOnRaidStart().Enable
-            new LHADestroyOnRaidEnd().Enable
+            new LHAController().Enable
         }
     }
 }
