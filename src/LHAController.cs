@@ -1,21 +1,19 @@
 using Aki.Reflection.Patching;
 using System;
 using System.Reflection;
+using EFT;
+using Newtonsoft;
 
 namespace LowHealthAlert
 {
-    public abstract class onRaidStart : ModulePatch
+    public class LHAController : MonoBehavior
     {
-        protected static Type _targetType;
-        protected static MethodBase _method;
-        public BaseRaidStartupPatch() : base()
+        public static Gameworld gameWorld
+        public static bool _toggle = false
+        
+        public void Update()
         {
-            _targetType = ReflectionUtils.FindFirstEftType("GameWorld");
-            _method = ReflectionUtils.FindFirstTypeMethod(_targetType, "OnGameStarted");
-        }
-        protected override MethodBase GetTargetMethod()
-        {
-            return _method;
+            
         }
     }
 }
