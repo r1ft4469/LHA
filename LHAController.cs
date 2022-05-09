@@ -81,6 +81,8 @@ namespace LHA
             OnEvent();
             yield return new WaitUntil(() => trigger == false);
             OnEventEndOrNull();
+            StartCoroutine(Check());
+            yield break;
         }
 
         private static void OnEvent()
