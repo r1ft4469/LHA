@@ -1,8 +1,0 @@
-{
-  "name": "Low Health Alert",
-  "author": "Kobrakon",
-  "license": "NCSA",
-  "version": "0.0.3 Prerelease"
-  "dependencies": {}
-  "akiVersion": ">2.3.0"
-}
