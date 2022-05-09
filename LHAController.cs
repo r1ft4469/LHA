@@ -45,7 +45,7 @@ namespace LHA
                 return;
             }
 
-            if (sessionResultPanel)
+            if (sessionResultPanel != null)
             {
                 trigger = false;
                 return;
